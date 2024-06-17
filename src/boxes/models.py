@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey, func, TIMESTAMP
 from sqlalchemy.orm import relationship
 from database import Base
 from boxes.schemas import BoxSchema, Size, Status
@@ -16,6 +16,8 @@ class Box(Base):
         Integer, ForeignKey("user.id"), unique=False, nullable=False
     )
     user = relationship("User", back_populates="boxes")
+    created_at = Column(TIMESTAMP(timezone=True), default=func.current_timestamp())
+    updated_at = Column(TIMESTAMP(timezone=True), default=func.current_timestamp(), onupdate=func.current_timestamp())
     
     def to_read_model(self) -> BoxSchema:
         return BoxSchema(

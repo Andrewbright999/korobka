@@ -26,20 +26,20 @@ app.mount("/static", StaticFiles(directory="../static"), name="static")
 #     # "http://localhost:3000",
 # ]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
-    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
-                   "Authorization"],
-)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_credentials=True,
+#     allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+#     allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+#                    "Authorization"],
+# )
 
 
-@app.middleware("http")
-async def auth_middleware(request, call_next):
-    response = await call_next(request)
-    if response.status_code == 401:
-        return RedirectResponse(url="/login", status_code=302)
+# @app.middleware("http")
+# async def auth_middleware(request, call_next):
+#     response = await call_next(request)
+#     if response.status_code == 401:
+#         return RedirectResponse(url="/login", status_code=302)
 
 
 
@@ -47,8 +47,8 @@ async def auth_middleware(request, call_next):
 async def startup_event():
     async with engine.begin() as conn:
         pass
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+        # await conn.run_sync(Base.metadata.drop_all)
+        # await conn.run_sync(Base.metadata.create_all)
     await create_admin()
 
 

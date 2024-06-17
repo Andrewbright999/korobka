@@ -82,7 +82,7 @@ a:hover{
 /* @media (min-width: 1200px) { */
     /* Шапка */
     header{
-        position: absolute;
+        position:fixed;
         background-color: #FFF;
         width: 100%;
         display: flex;
@@ -127,8 +127,8 @@ a:hover{
 
     /* Таблица */
     table{
+        padding-top: 110px;
         height: 72px;
-        border: none;
     }
 
     thead > tr{
@@ -164,6 +164,19 @@ a:hover{
     }
 
 
+    td.adres, td.client, td.phone-number, td.courier{
+        display:table-cell;
+        max-width: 150px;
+        margin-right: 1rem;
+        overflow: hidden;
+    }
+
+    th.adres, th.client, th.phone-number, th.courier{
+        /* display: inline-block;
+        width: 120px;
+        margin-right: 1rem; */
+        overflow: hidden;
+    }
 
     th.id{
         padding-left: 2rem;
@@ -172,7 +185,17 @@ a:hover{
         border-bottom-left-radius: 0.5rem;
     }
 
-    td.state > .state-div{
+    td.size{
+        padding-left: 1rem;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    th.size{
+        padding-right: 1rem;
+    }
+
+    .state-delivery, .state-done, .state-new{
         /* Auto layout */
         display: flex;
         width: fit-content;
@@ -189,8 +212,17 @@ a:hover{
         color: #FFFFFF;
         text-wrap:nowrap;
         }
-    td.state > .state-div,.new-state{
+
+    .state-new{
         background: #82569D;
+    }
+
+    .state-delivery{
+        background: #4C80CE;
+    }
+
+    .state-done{
+        background: #4C9954;
     }
 
     td.time{
@@ -203,6 +235,9 @@ a:hover{
         border-top-right-radius: 0.5rem;
         border-bottom-right-radius: 0.5rem;
     }
+
+
+ 
 
     fieldset{
         border: none;

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta ch arset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | Коробка</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='main/css/login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="background-image"></div>
+        <div class="login-container">
+            <h1>Добро<br>пожаловать!</h1>
+            <form id="email-form">
+                <input type="email" name="email" id="email" placeholder="Email@mail.ru" required>
+                <input type="password" name="password" id="password" placeholder="password" required>
+                <input type="submit" value="Войти" id="button-input">
+                <span id="error-message"></span>
+            </form>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script>
+                document.getElementById('email-form').addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const error_message = document.getElementById('error-message');
+                    const formData = new FormData();
+                    formData.set('username', email);
+                    formData.set('password', password);
+                    axios.post(
+                        'http://127.0.0.1:8000/auth/jwt/login',
+                        formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        },
+                    )
+                    .then(response => {
+                        if (response.status === 200) {
+                            localStorage.setItem('token', response.data.access_token);
+                            window.location.href = '/storage';
+                            console.log(response);
+                    } 
+                    })
+                    .catch(error => {
+                    error_message.textContent = 'Неправильный логин или пароль';
+                    console.log(error);
+                    });
+                })
+            </script>
+        </div>
+    </div>
+</body>
+</html>
+
+
+

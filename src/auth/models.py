@@ -20,5 +20,5 @@ class User(SQLAlchemyBaseUserTable, Base):
             email = self.email,
             phone = self.phone,
             role = self.role,
-            hashed_password = self.hashed_password
+            hashed_password = self.hashed_password,
         )

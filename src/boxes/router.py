@@ -11,10 +11,10 @@ from auth.schemas import Role
 from boxes.models import Box
 from auth.models import User
 from services.boxes import BoxService
-from dependecies import box_service, courier_role_check
+from dependecies import box_service, courier_role_check,storage_role_check
 
 
-router = APIRouter(tags=["Boxes"])
+router = APIRouter(prefix="/api",tags=["Boxes"])
 
 # @router.post('/box')
 # async def add_box(box_id:int = Depends(create_box)):
@@ -28,14 +28,11 @@ router = APIRouter(tags=["Boxes"])
 async def add_box(
     box: AddBoxRequest, 
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(current_user),
+    user: User = Depends(storage_role_check),
     ):
     """Добавление новой коробки"""
-    if user.role in [Role.Admin, Role.Storage]:
-        box_id = await box_service.add_box(box, user_id=user.id)
-        return JSONResponse(status_code=201, content={"box_id": box_id})
-    else:
-        return JSONResponse(status_code=403, content="Доступно только складу и администраторам")
+    box_id = await box_service.add_box(box, user_id=user.id)
+    return JSONResponse(status_code=201, content={"box_id": box_id})
 
 
 @router.get("/box/my")
@@ -50,24 +47,23 @@ async def find_login_courier_box(
 
 
 
-@router.get("/box/my/actual")
-async def find_actual_login_courier_box(
-    box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(current_user),
-):
-    """Все коробки авторизованного курьера"""
+# @router.get("/box/my/actual")
+# async def find_actual_login_courier_box(
+#     box_service: Annotated[BoxService, Depends(box_service)],
+#     user: User = Depends(current_user),
+# ):
+#     """Все коробки авторизованного курьера"""
     
-    boxes = await box_service.find_actual_courier_boxes(user_id=user.id)
-    return boxes
+#     boxes = await box_service.find_actual_courier_boxes(user_id=user.id)
+#     return boxes
 
-@router.get("/box/")
-async def find_courier_id_box(
-    user_id:int,
+@router.get("/box")
+async def find_boxes(
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(current_user),
+    user: User = Depends(storage_role_check),
 ):
-    """Все коробки ID курьера"""
-    boxes = await box_service.find_courier_boxes(user_id=user_id)
+    """Все коробки склада"""
+    boxes = await box_service.find_storage_boxes()
     return boxes
 
 @router.get("/box/{id}")
@@ -91,10 +87,7 @@ async def update_box_status(
     """Обновление статуса коробки"""
     try:
         box_id = await box_service.update_box_status(box_id=id ,user_id=user.id, status=status)
-        return {
-            "status": "204",
-            "box_id":box_id
-            }
+        return JSONResponse(status_code=201, content={"box_id": box_id})
     except NoResultFound:
         raise HTTPException(status_code=404, detail="Box not found")
 

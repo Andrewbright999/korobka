@@ -12,7 +12,7 @@ from dependecies import user_service, admin_role_check
 
 
 
-router = APIRouter(prefix="")
+router = APIRouter()
 
 
 router.include_router(

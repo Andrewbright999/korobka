@@ -15,6 +15,10 @@ class BoxService:
         boxes = await self.box_repo.find_all(user_id = user_id)
         return boxes
     
+    async def find_storage_boxes(self):
+        boxes = await self.box_repo.get_storage_boxes()
+        return boxes
+    
     async def find_actual_courier_boxes(self, user_id: int):
         boxes = await self.box_repo.find_all_in_status(status = [Status.DELIVERY, Status.NEW],user_id = user_id,)
         return boxes

@@ -41,6 +41,7 @@ body{
         height: 30%;
         bottom: 0PX;
     };
+
     left: 50%;
     transform: translate(-50%, 0%);
     background-image: url(../img/svg/box.svg);
@@ -48,7 +49,6 @@ body{
     background-position: bottom;
     background-repeat: no-repeat;
 }
-
 
 .login-container{
     position: absolute;
@@ -58,11 +58,10 @@ body{
     z-index: 10;
     background-color: #FFFFFF;
     width: fit-content;
-    @media (min-width: 768px){
-        padding: 80px 90px;
-        border-radius: 60px;
+    padding: 80px 90px;
+    border-radius: 60px;
     };
-}
+
 
 h1{
     font-family: 'Onest';
@@ -82,6 +81,10 @@ form{
     align-items: center;
 }
 
+#error-message{
+    padding-top: 20px;
+    color: #E65752;
+}
 
 #button-input{
     background-color: #000000;
@@ -143,21 +146,19 @@ input:focus:not(:placeholder-shown) {
     background-color: #000000;
 }
 
-@media (min-width: 768px){
-    #password-input{
-        margin-top: 50px;
-    }
-    
-    #email-input{
-        margin-top: 80px;
-    }
+#password-input{
+    margin-top: 50px;
+}
 
-    #button-input{
-        margin-top: 80px;
-    }
+#email-input{
+    margin-top: 80px;
+}
 
-    
-};
+#button-input{
+    margin-top: 40px;
+}
+
+
 
 /* Кнопки */
 button{

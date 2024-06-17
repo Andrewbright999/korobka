@@ -1,5 +1,7 @@
+from datetime import datetime
 from pydantic import BaseModel
 from enum import StrEnum
+
 
 
 class Size(StrEnum):
@@ -25,6 +27,8 @@ class AddBoxRequest(BaseModel):
     address: str
     phone: str
     client: str
+    created_at: datetime = datetime.now()
+    updated_at: datetime = datetime.now()
     class Config:   
         from_attributes = True
 
