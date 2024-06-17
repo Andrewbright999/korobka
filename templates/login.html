@@ -28,7 +28,7 @@
                     formData.set('username', email);
                     formData.set('password', password);
                     axios.post(
-                        window.location.host+'/auth/jwt/login',
+                        '/auth/jwt/login',
                         formData,
                         {
                             headers: {

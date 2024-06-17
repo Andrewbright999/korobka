@@ -29,6 +29,3 @@ class Box(Base):
             user_id = self.user_id,
             status = self.status,
         )
-
-
-

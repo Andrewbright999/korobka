@@ -22,7 +22,7 @@
     const token = localStorage.getItem('token');
     console.log(token)
     axios.get(
-        window.location.host+'/api/box',
+        '/api/box',
         {
             headers: {
                 'Content-Type': 'multipart/form-data',
