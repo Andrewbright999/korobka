@@ -1,15 +1,14 @@
-# main.py
+import asyncio
+import uvicorn
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-
 from database import Base, engine
 from boxes.router import router as box_router
 from auth.routers import router as auth_router
 from pages.router import router as page_router
 from auth.admin import create_admin
-
 
 
 app = FastAPI(
@@ -56,3 +55,5 @@ async def startup_event():
 async def login_page():
     return RedirectResponse(url="/login")
     
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
