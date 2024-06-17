@@ -78,7 +78,7 @@ class SQLAlchemyRepostitory(AbstractRepository):
         async with async_session() as session:
             querty = (select(self.model)
                       .options(joinedload(self.model.user))
-                      )
+                      ).order_by(desc(self.model.id))
             result = await session.execute(querty)  
             result = [{
             "id": box.id,
@@ -86,7 +86,7 @@ class SQLAlchemyRepostitory(AbstractRepository):
             "address": box.address,
             "phone": box.phone,
             "client": box.client,
-            "courier": f"{box.user.first_name} {box.user.second_name[:1]}",
+            "courier": f"{box.user.first_name} {box.user.second_name[:1]}.",
             "status": box.status
             } for box in result.scalars().all()]
             return result

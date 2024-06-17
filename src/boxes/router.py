@@ -24,7 +24,7 @@ router = APIRouter(prefix="/api",tags=["Boxes"])
 #     "box_id": box_id
 #         }
     
-@router.post('/box')
+@router.post('/boxes')
 async def add_box(
     box: AddBoxRequest, 
     box_service: Annotated[BoxService, Depends(box_service)],
@@ -35,7 +35,7 @@ async def add_box(
     return JSONResponse(status_code=201, content={"box_id": box_id})
 
 
-@router.get("/box/my")
+@router.get("/boxes/my")
 async def find_login_courier_box(
     box_service: Annotated[BoxService, Depends(box_service)],
     user: User = Depends(courier_role_check),
@@ -57,7 +57,7 @@ async def find_login_courier_box(
 #     boxes = await box_service.find_actual_courier_boxes(user_id=user.id)
 #     return boxes
 
-@router.get("/box")
+@router.get("/boxes")
 async def find_boxes(
     box_service: Annotated[BoxService, Depends(box_service)],
     user: User = Depends(storage_role_check),
@@ -66,7 +66,7 @@ async def find_boxes(
     boxes = await box_service.find_storage_boxes()
     return boxes
 
-@router.get("/box/{id}")
+@router.get("/boxes/{id}")
 async def find_box_id(
     id:int,
     box_service: Annotated[BoxService, Depends(box_service)],
@@ -77,7 +77,7 @@ async def find_box_id(
     return boxes
 
 
-@router.put('/box/{id}')
+@router.put('/boxes/{id}')
 async def update_box_status(
     id:int,
     status: UpdateStatus,

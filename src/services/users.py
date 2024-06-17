@@ -15,3 +15,7 @@ class UserService:
         boxes = await self.box_repo.find_all()
         return boxes
     
+    async def find_one(self, user_id:int):
+        boxes = await self.box_repo.find_all(id = user_id)
+        return boxes
+    

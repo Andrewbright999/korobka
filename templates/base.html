@@ -1,30 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta ch arset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
     <title>{% block title%}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', path='main/css/style.css') }}">
 </head>
 <body>
     <header>
         <aside class="header-container">
-            <div class="header-button">
-                <h1>Склад</h1>
-                <button id="add_btns">Добавить посылку
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <mask id="mask0_52_957" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="28" height="28">
-                <rect y="0.471802" width="27.0565" height="27.0565" fill="#D9D9D9"/>
-                </mask>
-                <g mask="url(#mask0_52_957)">
-                <path d="M12.4008 15.1274H5.63672V12.8727H12.4008V6.10858H14.6555V12.8727H21.4196V15.1274H14.6555V21.8915H12.4008V15.1274Z" fill="white"/>
-                </g>
-                </svg>
-                </button>   
-            </div>
-            <a href="/profile" id="profile-name">Бочаров А.</a>
-        </aside>
+            <h1>Склад</h1>
+            <a href="/profile" id="profile-name">Пользователь</a>
+        </aside>`
     </header>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    let body = document.querySelector("header")
+    axios.get(
+        '/users/profile',
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+        },
+    )
+        .then(response => {
+            if (response.status === 200) {
+                console.log(response.data[0]);
+                const profiledata = response.data[0]
+                let profilename = profiledata.second_name +" "+profiledata.first_name[0] + "." 
+                const header = document.querySelector('h1');
+                const profile = document.getElementById('profile-name');
+                header.innerText = profiledata.role;
+                profile.innerText = profilename;
+                }
+        })
+        .catch(error => {
+        console.log(error.response);
+        console.log();
+
+        if (error.response.data.detail == 'Unauthorized'){
+            window.location.href = '/login';
+        }
+        });
+    </script>
             {% block body%}{% endblock %} 
 </body>
 </html>

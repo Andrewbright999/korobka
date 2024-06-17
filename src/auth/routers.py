@@ -5,14 +5,14 @@ from fastapi import APIRouter, Depends
 from auth.auth_backend import auth_backend
 from auth.schemas import UserRead, UserCreate
 from auth.models import User
-from auth.manager import fastapi_users
+from auth.manager import fastapi_users, current_user
 from dependecies import admin_role_check
 from services.users import UserService
 from dependecies import user_service, admin_role_check
 
 
 
-router = APIRouter()
+router = APIRouter(tags=["User"])
 
 
 router.include_router(
@@ -29,7 +29,7 @@ router.include_router(
 )
 
 
-@router.get("/users",tags=["User"])
+@router.get("/users")
 async def find_login_courier_box(
     user_service: Annotated[UserService, Depends(user_service)],
     user: User = Depends(admin_role_check),
@@ -38,4 +38,14 @@ async def find_login_courier_box(
     # try: 
     users = await user_service.find_all_users()
     return users
+
+@router.get("/users/profile")
+async def find_login_courier_box(
+    user_service: Annotated[UserService, Depends(user_service)],
+    user: User = Depends(current_user),
+):
+    """Получить всех пользователей"""
+    # try: 
+    user = await user_service.find_one(user_id=user.id)
+    return user
 

@@ -18,14 +18,13 @@
 </table>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+    let token = localStorage.getItem('token');
     const tableTbody = document.querySelector("table > tbody")
-    const token = localStorage.getItem('token');
     console.log(token)
     axios.get(
-        '/api/box',
+        '/api/boxes',
         {
             headers: {
-                'Content-Type': 'multipart/form-data',
                 'Authorization': 'Bearer ' + token
             },
         },
