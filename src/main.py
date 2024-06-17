@@ -1,11 +1,13 @@
 # main.py
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import Base, engine
 from boxes.router import router as box_router
 from auth.routers import router as auth_router
+from pages.router import router as page_router
 from auth.admin import create_admin
 
 
@@ -13,6 +15,12 @@ from auth.admin import create_admin
 app = FastAPI(
     title="Коробка"
 )
+
+app.include_router(auth_router)
+app.include_router(box_router)
+app.include_router(page_router)
+
+app.mount("/static", StaticFiles(directory="../static"), name="static")
 
 # origins = [
 #     # "http://localhost:3000",
@@ -31,13 +39,9 @@ app.add_middleware(
 async def auth_middleware(request, call_next):
     response = await call_next(request)
     if response.status_code == 401:
-        return RedirectResponse(url="/", status_code=302)
-    return response
+        return RedirectResponse(url="/login", status_code=302)
 
 
-
-app.include_router(auth_router)
-app.include_router(box_router)
 
 @app.on_event("startup")
 async def startup_event():
@@ -50,5 +54,5 @@ async def startup_event():
 
 @app.get("/")
 async def login_page():
-    return HTMLResponse("<h1>Велкам нахуй</h1>")
+    return RedirectResponse(url="/login")
     

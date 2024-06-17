@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title%}Склад{% endblock %}
+{% block body%}
+<table>
+    <thead>
+      <tr>
+        <th scope="col" class="id">ID</th> 
+        <th scope="col" class="state">Статус</th>
+        <th scope="col" class="content">Размер</th>
+        <th scope="col" class="adres">Адрес</th>
+        <th scope="col" class="client">Клиент</th>
+        <th scope="col" class="phone-number">Телефон</th>
+        <th scope="col" class="date">Дата</th>
+        <th scope="col" class="time">Время</th>
+        <th scope="col" class="courier">Курьер</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in range(10) %}
+            <tr>
+                <th scope="row" class="id">343874</th>
+                <td class="state">
+                    <div class="state-div" class="new-state">
+                        <div class="img-icon-circle"></div>
+                        Новая
+                    </div>
+                </td>
+                <td class="content">Коробка L</td>
+                <td class="adres">Адресная 23</td>
+                <td class="client">Александр</td>
+                <td class="phone-number">+78988223533</td>
+                <td class="date">Сегодня</td>
+                <td class="time">12:23</td>
+                <td class="courier">Максим</td>
+            </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock %} 

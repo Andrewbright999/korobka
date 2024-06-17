@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta ch arset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | Коробка</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='main/css/login.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="background-image"></div>
+        <div class="login-container">
+            <h1>Добро<br>пожаловать!</h1>
+            <form action="/users/test-login", method="post">
+                <input type="email" name="email" id="email" required>
+                <input type="password" name="password" id="password" required>
+                <input type="submit" value="Войти" id="button-input">scale
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
