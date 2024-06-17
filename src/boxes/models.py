@@ -14,8 +14,6 @@ class Box(Base):
     client = Column(String)
     user_id = Column(Integer, ForeignKey("user.id"), unique=False, nullable=False)
     user = relationship("User", back_populates="boxes")
-    created_at = Column(TIMESTAMP(timezone=True), default=func.current_timestamp())
-    updated_at = Column(TIMESTAMP(timezone=True), default=func.current_timestamp(), onupdate=func.current_timestamp())
     
     def to_read_model(self) -> BoxSchema:
         return BoxSchema(
@@ -26,6 +24,4 @@ class Box(Base):
             client = self.client,
             user_id = self.user_id,
             status = self.status,
-            created_at = self.created_at,
-            updated_at = self.updated_at,
         )
