@@ -15,7 +15,7 @@ def get_base_page(request: Request):
 @router.get("/login")
 def get_base_page(request: Request):
     context = {"request": request}
-    return templates.TemplateResponse("login.html", context=context)
+    return templates.TemplateResponse("index.html", context=context)
 
 # @router.get("/test-login")
 # def get_base_page(request: Request):
