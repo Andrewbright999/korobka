@@ -14,6 +14,7 @@ from auth.admin import create_admin
 app = FastAPI(
     title="Коробка"
 )
+app.config["PREFERRED_URL_SCHEME"] = "https"
 
 app.include_router(auth_router)
 app.include_router(box_router)
