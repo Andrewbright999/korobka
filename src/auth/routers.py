@@ -18,14 +18,12 @@ router = APIRouter(tags=["User"])
 router.include_router(
     fastapi_users.get_auth_router(auth_backend),
     prefix="/auth/jwt",
-    tags=["auth"],
 )
 
 router.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
     dependencies=[Depends(admin_role_check)],
     prefix="/auth",
-    tags=["auth"],
 )
 
 

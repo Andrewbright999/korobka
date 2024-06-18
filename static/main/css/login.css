@@ -26,22 +26,22 @@ body{
     justify-self: center;
 }
 
+h1#welcome{
+    font-family: 'Onest';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 42px;
+    text-align: center;
+    background-color: #FFFFFF;
+}
+
 .background-image{
     position:absolute;
     pointer-events: none;
     z-index: -1;
-
-    @media (min-width: 768px){
-        width: 60%;
-        height: 50%;
-        bottom: 0svh;
-    };
-    @media (max-width: 768px){
-        width: 95%;
-        height: 30%;
-        bottom: 0PX;
-    };
-
+    width: 60%;
+    height: 50%;
+    bottom: 0svh;
     left: 50%;
     transform: translate(-50%, 0%);
     background-image: url(../img/svg/box.svg);
@@ -52,7 +52,7 @@ body{
 
 .login-container{
     position: absolute;
-    top: 50%;
+    top:  50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
@@ -61,25 +61,15 @@ body{
     padding: 80px 70px;
     padding-bottom: 70px;
     border-radius: 60px;
-    };
-
-
-h1{
-    font-family: 'Onest';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 48px;
-    text-align: center;
-    color: #000000;
-    background-color: #FFFFFF;
 }
 
-form{
+    
+form#email-form{
     z-index: 10;
     display: flex;
     flex-direction: column;
-    background-color: #FFFFFF;
     align-items: center;
+    justify-content: center;
 }
 
 #error-message{

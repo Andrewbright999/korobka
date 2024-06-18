@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход | Коробка</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='main/css/login.css', _scheme='https') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='main/css/login.css') }}">
 </head>
 <body>
     <div class="container">
         <div class="background-image"></div>
         <div class="login-container">
-            <h1>Добро<br>пожаловать!</h1>
+            <h1 id="welcome"> Добро<br>пожаловать! </h1>
             <form id="email-form">
                 <input type="email" name="email" id="email" placeholder="Email@mail.ru" required>
                 <input type="password" name="password" id="password" placeholder="password" required>
