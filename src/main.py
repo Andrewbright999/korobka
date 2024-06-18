@@ -54,9 +54,9 @@ async def startup_event():
     await create_admin()
 
 
-# @app.get("/")
-# async def login_page():
-#     return RedirectResponse(url="/login")
+@app.get("/")
+async def login_page():
+    return RedirectResponse(url="/login")
 #  location / {
 #                         proxy_pass http://127.0.0.1:8000; # указанный порт должен соответствовать порту сервера Uvicorn
 #                         proxy_set_header Host $host; # передаем заголовок Host, содержащий целевой IP и порта сервера.
@@ -67,4 +67,4 @@ async def startup_event():
 #                 }
     
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)
