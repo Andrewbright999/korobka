@@ -20,7 +20,9 @@ app.include_router(auth_router)
 app.include_router(box_router)
 app.include_router(page_router)
 
+
 app.mount("/static", StaticFiles(directory="../static"), name="static")
+
 
 # origins = [
 #     # "http://localhost:3000",
@@ -55,6 +57,14 @@ async def startup_event():
 # @app.get("/")
 # async def login_page():
 #     return RedirectResponse(url="/login")
+#  location / {
+#                         proxy_pass http://127.0.0.1:8000; # указанный порт должен соответствовать порту сервера Uvicorn
+#                         proxy_set_header Host $host; # передаем заголовок Host, содержащий целевой IP и порта сервера.
+#                         proxy_set_header X-Real-IP $remote_addr; # передаем заголовок с IP-адресом пользователя
+#                         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#                         proxy_set_header X-Forwarded-Proto $scheme;
+#                         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; # передаем всю последовательность адресов, через которые прошел запрос
+#                 }
     
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
