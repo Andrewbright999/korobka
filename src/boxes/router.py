@@ -54,8 +54,11 @@ async def find_box_id(
     user: User = Depends(current_user),
 ):
     """Получение данных о конкретной коробке"""
-    boxes = await box_service.find_boxes_id(id=id)
-    return boxes
+    try:
+        boxes = await box_service.find_boxes_id(id=id)
+        return boxes
+    except:
+        return JSONResponse(status_code=404, content={"detail":"Box not found"})
 
 
 @router.put('/boxes/{id}')
