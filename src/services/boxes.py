@@ -29,4 +29,5 @@ class BoxService:
     
     async def find_boxes_id(self, id: int):
         boxes = await self.box_repo.find_all(id = id)
-        return boxes
+        
+        return boxes[0]
