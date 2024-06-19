@@ -68,6 +68,18 @@ h1{
     font-size: 2rem;
 }
 
+#not-found{
+    width: 600px;
+    height: 300px;
+    margin: 100px 160px 0px 160px;
+    background-image: url(../img/svg/posts_empty.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
+    }
+
 
 /* Таблица */
 table{

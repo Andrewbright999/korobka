@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.orm import relationship
-from database import Base
 from fastapi_users.db import SQLAlchemyBaseUserTable
+
+from database import Base
 from auth.schemas import PassUserRead, Role
 
 class User(SQLAlchemyBaseUserTable, Base):

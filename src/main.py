@@ -1,22 +1,31 @@
-import asyncio
 import uvicorn
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.templating import Jinja2Templates
+from contextlib import asynccontextmanager
 
+from fastapi import FastAPI, Request, HTTPException, status
+from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from database import Base, engine
+from database import create_tables
 from boxes.router import router as box_router
 from auth.routers import router as auth_router
 from pages.router import router as page_router
 from auth.admin import create_admin
 
-templates = Jinja2Templates(directory="../templates")
 
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await create_tables()
+    await create_admin()    
+    yield
 
 app = FastAPI(
-    title="Коробка"
+    title="Коробка",
+    lifespan=lifespan
 )
 
 app.include_router(auth_router)
@@ -26,6 +35,7 @@ app.include_router(page_router)
 
 app.mount("/static", StaticFiles(directory="../static"), name="static")
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -34,31 +44,37 @@ app.add_middleware(
                    "Authorization"],
 )
 
-@app.on_event("startup")
-async def startup_event():
-    async with engine.begin() as conn:
-        pass
-        # await conn.run_sync(Base.metadata.drop_all)
-        # await conn.run_sync(Base.metadata.create_all)
-    await create_admin()
+
+templates = Jinja2Templates(directory="../templates")
 
 
 @app.exception_handler(404)
 async def not_found_exception_handler(request: Request, exc: HTTPException):
+    """Обработка ошибки 404"""
     context = {"request": request}
-    return templates.TemplateResponse("404page.html", context=context)
+    return templates.TemplateResponse("404.html", context=context)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Обработка некоректного ввода"""
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
+    )
+
+
+@app.exception_handler(500)
+async def not_found_exception_handler(request: Request, exc: HTTPException):
+    """Обработка ошибки 500"""
+    context = {"request": request}
+    return templates.TemplateResponse("500.html", context=context)
+
 
 @app.get("/")
-async def login_page():
-    return RedirectResponse(url="/login")
-#  location / {
-#                         proxy_pass http://127.0.0.1:8000; # указанный порт должен соответствовать порту сервера Uvicorn
-#                         proxy_set_header Host $host; # передаем заголовок Host, содержащий целевой IP и порта сервера.
-#                         proxy_set_header X-Real-IP $remote_addr; # передаем заголовок с IP-адресом пользователя
-#                         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#                         proxy_set_header X-Forwarded-Proto $scheme;
-#                         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; # передаем всю последовательность адресов, через которые прошел запрос
-#                 }
+async def default_page():
+    """Переадресация на страницу склада"""
+    return RedirectResponse(url="/storage")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)

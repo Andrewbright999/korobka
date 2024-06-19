@@ -1,15 +1,14 @@
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import APIRouter, Depends
+from fastapi.responses import JSONResponse
 
 from auth.auth_backend import auth_backend
-from auth.schemas import UserRead, UserCreate
+from auth.schemas import UserRead, UserCreate, PassUserRead
 from auth.models import User
 from auth.manager import fastapi_users, current_user
-from dependecies import admin_role_check
 from services.users import UserService
-from dependecies import user_service, admin_role_check
-
+from dependecies import admin_role_check, user_service, admin_role_check
 
 
 router = APIRouter(tags=["User"])
@@ -20,6 +19,7 @@ router.include_router(
     prefix="/auth/jwt",
 )
 
+
 router.include_router(
     fastapi_users.get_register_router(UserRead, UserCreate),
     dependencies=[Depends(admin_role_check)],
@@ -28,22 +28,23 @@ router.include_router(
 
 
 @router.get("/users")
-async def find_login_courier_box(
+async def get_all_users(
     user_service: Annotated[UserService, Depends(user_service)],
     user: User = Depends(admin_role_check),
-):
-    """Получить всех пользователей"""
-    # try: 
+) -> List[PassUserRead]: 
+    """Получить список всех пользователей"""
     users = await user_service.find_all_users()
+    if len(users) == 0:
+        raise JSONResponse(status_code=404, content={"details":"Пользователей нет"})
     return users
 
+
 @router.get("/users/profile")
-async def find_login_courier_box(
+async def get_user_profile(
     user_service: Annotated[UserService, Depends(user_service)],
     user: User = Depends(current_user),
-):
-    """Получить всех пользователей"""
-    # try: 
+)-> PassUserRead:
+    """Получить профиль пользователя"""
     user = await user_service.find_one(user_id=user.id)
     return user
 

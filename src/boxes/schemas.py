@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from enum import StrEnum
 
 
-
 class Size(StrEnum):
     S = "S"
     M = "M"
@@ -20,6 +19,10 @@ class Status(StrEnum):
     NEW = "Новый"
     DELIVERY = "Доставка"
     DONE = "Завершен"
+    
+    
+class OnCreateBox(BaseModel):
+    box_id: int
     
     
 class AddBoxRequest(BaseModel):
@@ -43,4 +46,13 @@ class BoxSchema(AddBoxRequest):
     phone: str
     client: str
     user_id: int
+    status: Status
+    
+class BoxRead(AddBoxRequest):
+    id: int
+    size: Size
+    address: str
+    phone: str
+    client: str
+    courier: str
     status: Status

@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase
 
 from config import settings
 
-#  database
+
 class Base(DeclarativeBase):    
     def __repr__(self) -> str:
         cols = []
@@ -14,14 +14,18 @@ class Base(DeclarativeBase):
         return f"<{self.__class__.__name__} {','.join(cols)}>"
     pass 
 
+
+metadata = MetaData()
+
+
 engine = create_async_engine(
     url = settings.DATABASE_URL_asyncpg,
     # echo=True,  
 )
 
-metadata = MetaData()
 
 async_session = async_sessionmaker(engine, expire_on_commit=False)
+
 
 async def get_async_session():
     async with async_session() as session:

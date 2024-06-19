@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="{{ url_for('static', path='errors/css/style.css') }}">
-    <title>Коробка | 404 Страница не найдена</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='errors/css/500.css') }}">
+    <title>Коробка | 500 Ошибка сервера</title>
 </head>
 <body>
     <div class="main-container">
-        <h1>404</h1>
+        <h1>У нас что-то<br>сломалось =(</h1>
         <div id="box-404"></div>
-        <a href="/storage">На главную</a>
     </div>
 </body>
 </html>

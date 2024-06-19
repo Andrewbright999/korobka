@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
     <title>{% block title%}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='main/css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='storage/css/style.css') }}">
 </head>
 <body>
     <header>
@@ -27,8 +27,8 @@
     )
         .then(response => {
             if (response.status === 200) {
-                console.log(response.data[0]);
-                const profiledata = response.data[0]
+                console.log(response.data);
+                const profiledata = response.data
                 let profilename = profiledata.second_name +" "+profiledata.first_name[0] + "." 
                 const header = document.querySelector('h1');
                 const profile = document.getElementById('profile-name');

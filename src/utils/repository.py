@@ -1,13 +1,13 @@
 from abc import abstractmethod, ABC
+
 from sqlalchemy import insert, select, update
 from sqlalchemy.orm import joinedload
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy import desc
+
 from auth.models import User
-
-
-
 from database import async_session
+
 
 class AbstractRepository(ABC):
     @abstractmethod
@@ -29,19 +29,7 @@ class AbstractRepository(ABC):
     @abstractmethod
     async def get_storage_boxes():
         raise NotImplementedError
-    
-    @abstractmethod
-    async def get_courier_boxes():
-        raise NotImplementedError
-    
-    @abstractmethod
-    async def get_all_couriers():
-        raise NotImplementedError
-    
-    @abstractmethod
-    async def get_all_couriers():
-        raise NotImplementedError
-    
+
     
 class SQLAlchemyRepostitory(AbstractRepository):
     model = None
@@ -90,13 +78,3 @@ class SQLAlchemyRepostitory(AbstractRepository):
             "status": box.status
             } for box in result.scalars().all()]
             return result
-    
-    
-    async def get_courier_boxes():
-        raise NotImplementedError
-    
-    async def get_all_couriers():
-        raise NotImplementedError
-    
-    async def get_all_couriers():
-        raise NotImplementedError

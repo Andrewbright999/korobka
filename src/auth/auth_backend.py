@@ -1,17 +1,17 @@
 from fastapi import Depends
 from fastapi_users.db import SQLAlchemyUserDatabase
-from database import AsyncSession, get_async_session
 from fastapi_users.authentication import AuthenticationBackend, BearerTransport, JWTStrategy
 
+from database import AsyncSession, get_async_session
 from auth.models import User
+from config import settings
 
-
-JWT_SECRET = "SECRET"
 
 bearer_transport = BearerTransport(tokenUrl="auth/jwt/login")
 
+
 def get_jwt_strategy() -> JWTStrategy:
-    return JWTStrategy(secret=JWT_SECRET, lifetime_seconds=3600)
+    return JWTStrategy(secret=settings.SECRET_AUTH, lifetime_seconds=3600)
 
 auth_backend = AuthenticationBackend(
     name="jwt",

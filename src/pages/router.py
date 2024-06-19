@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 router = APIRouter(
@@ -8,28 +9,20 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="../templates")
 
+
 @router.get("/storage")
-def get_base_page(request: Request):
+def get_storage_page(request: Request) -> HTMLResponse:
+    """Главная страница, если пользователь не авторизован, то редирект на страницу входа"""
     return templates.TemplateResponse("storage.html", {"request": request})
 
 @router.get("/login")
-def get_base_page(request: Request):
+def get_login_page(request: Request) -> HTMLResponse:
+    """Страница для входа"""
     context = {"request": request}
     return templates.TemplateResponse("index.html", {"request": request})
     
-    
-
-
-# @router.get("/test-login")
-# def get_base_page(request: Request):
-#     context = {"request": request}
-#     return templates.TemplateResponse("test_login.html", context=context)
-
-# @router.get("/profile")
-# def get_base_page(request: Request):
-#     context = {"request": request}
-#     return templates.TemplateResponse("profile_page.html", context=context)
-
-# @router.get("/search")
-# def get_base_page(request: Request):
-#     return templates.TemplateResponse("search.html", {"request": request})  
+@router.get("/500")
+def get_server_err_page(request: Request) -> HTMLResponse:
+    """Страница ощибки сервера в демонстративных целях"""
+    context = {"request": request}
+    return templates.TemplateResponse("500.html", {"request": request})

@@ -12,7 +12,6 @@ from services.users import UserService
 def box_service():
     return BoxService(BoxRepository)
 
-
 def user_service():
     return UserService(UserRepository)
 
@@ -25,7 +24,6 @@ def admin_role_check(user: User = Depends(current_user)):
     else:
         return user
         
-        
 def courier_role_check(user: User = Depends(current_user)):
     if user.role not in [Role.Admin, Role.Courier]:
         raise HTTPException(
@@ -34,7 +32,6 @@ def courier_role_check(user: User = Depends(current_user)):
         )
     else:
         return user
-        
 
 def storage_role_check(user: User = Depends(current_user)):
     if user.role not in [Role.Admin, Role.Storage]:
@@ -44,6 +41,3 @@ def storage_role_check(user: User = Depends(current_user)):
         )
     else:
         return user
-        
-        
-        

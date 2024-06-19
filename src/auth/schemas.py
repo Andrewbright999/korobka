@@ -1,5 +1,5 @@
-from fastapi_users import schemas
 from enum import StrEnum
+from fastapi_users import schemas
 from pydantic import BaseModel
 
 
@@ -17,6 +17,7 @@ class UserRead(schemas.BaseUser[int]):
     second_name: str
     role: Role
 
+
 class UserCreate(schemas.BaseUserCreate):
     email: str
     phone: str
@@ -27,6 +28,7 @@ class UserCreate(schemas.BaseUserCreate):
     is_superuser: bool = False
     is_verified: bool = True
 
+
 class ClearUserRead(BaseModel):
     id: int
     email: str
@@ -35,6 +37,6 @@ class ClearUserRead(BaseModel):
     second_name: str
     role: Role
     
+    
 class PassUserRead(ClearUserRead):
     hashed_password: str
-    

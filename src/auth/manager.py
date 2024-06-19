@@ -6,9 +6,7 @@ from fastapi_users import BaseUserManager, InvalidID
 
 from auth.models import User
 from auth.auth_backend import get_user_db, auth_backend
-
-
-AUTH_SECRET = "SECRET"
+from config import settings
 
 
 class UserManager(BaseUserManager[User, int]):
@@ -17,15 +15,15 @@ class UserManager(BaseUserManager[User, int]):
             return int(value)
         except ValueError as e:
             raise InvalidID() from e 
-    reset_password_token_secret = AUTH_SECRET
-    verification_token_secret = AUTH_SECRET
+        
+    reset_password_token_secret = settings.SECRET_AUTH
+    verification_token_secret = settings.SECRET_AUTH
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
         user.is_active = True
         user.is_verified = True
         user.is_superuser = False
         print(f"User {user.id} has registered.")
-        
 
     async def on_after_forgot_password(
         self, user: User, token: str, request: Optional[Request] = None
