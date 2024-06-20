@@ -4,3 +4,5 @@ from domain.users.models import User
 
 class UserRepository(SQLAlchemyRepostitory):
     model = User
+    
+    
