@@ -5,12 +5,9 @@ from fastapi_users.db import SQLAlchemyUserDatabase
 from fastapi_users.authentication import AuthenticationBackend, BearerTransport, JWTStrategy
 
 from application.services.auth import UserManager
-from infrastructure.utils.database import AsyncSession, get_async_session
 from domain.users.models import User
-from domain.users.schemas import UserCreate, Role
+from infrastructure.utils.database import AsyncSession, get_async_session
 from infrastructure.utils.config import settings
-
-
 
 
 def get_jwt_strategy() -> JWTStrategy:

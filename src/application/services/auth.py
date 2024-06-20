@@ -1,7 +1,6 @@
 from fastapi_users import BaseUserManager, InvalidID
-from fastapi_users.exceptions import UserAlreadyExists
 
-from domain.users.models import User, Role
+from domain.users.models import User
 from infrastructure.utils.config import settings
 
 
