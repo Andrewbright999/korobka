@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
-    <title>{% block title%}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='storage/css/style.css') }}">
+    <title></title>
+    {% block header %}{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static', path='base/css/style.css') }}">
 </head>
 <body>
     <header>
@@ -15,35 +16,7 @@
         </aside>
     </header>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    let body = document.querySelector("header")
-    axios.get(
-        '/users/profile',
-        {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            },
-        },
-    )
-        .then(response => {
-            if (response.status === 200) {
-                console.log(response.data);
-                const profiledata = response.data
-                let profilename = profiledata.second_name +" "+profiledata.first_name[0] + "." 
-                const header = document.querySelector('h1');
-                const profile = document.getElementById('profile-name');
-                header.innerText = profiledata.role;
-                profile.innerText = profilename;
-                }
-        })
-        .catch(error => {
-        console.log(error.response);
-        console.log();
-        if (error.response.data.detail == 'Unauthorized'){
-            window.location.href = '/login';
-        }
-        });
-    </script>
-            {% block body%}{% endblock %} 
+    <script src="{{ url_for('static', path='base/js/profile.js') }}"></script>
+    {% block body %}{% endblock %}
 </body>
 </html>

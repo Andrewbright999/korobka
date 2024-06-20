@@ -1,192 +1,59 @@
 {% extends 'base.html' %}
-{% block title%}Склад{% endblock %}
-{% block body%}
+{% block header %}
+<title>Склад</title>
+<link rel="stylesheet" href="{{ url_for('static', path='storage/css/style.css') }}">
+{% endblock %}
+{% block body %}
 <div class="body-container">
     <div id="not-found"></div>
-    <table>
-    </table>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-        var qrCodeContainer = document.getElementById('qr-modal-container');
-        let token = localStorage.getItem('token');
-        const table = document.querySelector("table")
-        const notFoundImg = document.getElementById("not-found")
-        console.log(token)
-        function loadTableData() {
-            axios.get(
-                '/api/boxes',
-                {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                },
-            )
-            .then(response => {
-                if (response.status === 200) {
-                    console.log(response.data);
-                    notFoundImg.style.display = 'none';
-                    table.innerHTML = `
-                    <thead>
-                        <tr>
-                            <th scope="col" class="id">ID</th> 
-                            <th scope="col" class="state">Статус</th>
-                            <th scope="col" class="size">Размер</th>
-                            <th scope="col" class="adres">Адрес</th>
-                            <th scope="col" class="client">Клиент</th>
-                            <th scope="col" class="phone-number">Телефон</th>
-                            <th scope="col" class="courier">Курьер</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                    const tableTbody = document.querySelector("table > tbody")
-                    const data = response.data
-                    for (const item of data) {
-                    let className;
-                    if (item.status === 'Завершен') {
-                        className = 'state-done';
-                    } else if (item.status === 'Доставка') {
-                        className = 'state-delivery';
-                    } else {
-                        className = 'state-new';
-                    }
-                    const row = document.createElement('tr');
-                        row.innerHTML = `<th scope="row" class="id">${item.id}</th>
-                            <td class="state"> <div class=${className}>${item.status}</div> </td>
-                            <td class="size">${item.size}</td>
-                            <td class="adres">${item.address}</td>
-                            <td class="client">${item.client}</td>
-                            <td class="phone-number">${item.phone}</td>
-                            <td class="courier">${item.courier}</td>`;
-                        tableTbody.appendChild(row);
-                    }
-                } 
-            })
-            .catch(error => {
-            if (error.status === 404) {
-                console.log(404)
-                notFoundImg.style.display = 'flex'
-                table.set.innerHTML = ``;
-                table.style.display = 'none';
-            };
-            console.log(error.response);
-            console.log();
-
-            if (error.response.data.detail == 'Unauthorized'){
-                window.location.href = '/login';
-            }
-            });
-        }
-        loadTableData();
-        setInterval(loadTableData, 15000);
-        </script>
-        <div class="form-container">
-            <h2>Новая посылка</h2>
-            <form id="create-box-form">
-                <div class="form-row">
-                    <label for="size">Размер</label>
-                    <div class="size-options">
-                        <input type="radio" id="size-s" name="size" value="S" checked>
-                        <label for="size-s">S</label>
-                        <input type="radio" id="size-m" name="size" value="M">
-                        <label for="size-m">M</label>
-                        <input type="radio" id="size-l" name="size" value="L">
-                        <label for="size-l">L</label>
-                        <input type="radio" id="size-xl" name="size" value="XL">
-                        <label for="size-xl">XL</label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <label for="client">Клиент</label>
-                    <input type="text" id="client" name="client" placeholder="Андрей" required>
-                </div>
-                <div class="form-row">
-                    <label for="phone">Телефон</label>
-                    <input type="tel" id="phone" name="phone" placeholder="89123456789" required>
-                </div>
-                <div class="form-row">
-                    <label for="address">Адрес</label>
-                    <input type="text" id="address" name="address" placeholder="ул.Название 123" required>
-                </div>
-                <input type="submit" id="add_btns" value="Добавить посылку">
-            </form>
-        </div>
-
-        <div id="qr-code-container" style="display: none;">
-            <div id="qr-modal-container"></div>
-            <div id="top-section">
-                <div id="qr-code"></div>
-                <div id="right-section">
-                    <span id="qr-help-msg">Наклейте или напишите<br>айди на кробку</span>
-                    <div id="box-id"></div>
-                    <button id="print-btn">Распечатать</button>
+    <table></table>
+    <div class="form-container">
+        <h2>Новая посылка</h2>
+        <form id="create-box-form">
+            <div class="form-row">
+                <label for="size">Размер</label>
+                <div class="size-options">
+                    <input type="radio" id="size-s" name="size" value="S" checked>
+                    <label for="size-s">S</label>
+                    <input type="radio" id="size-m" name="size" value="M">
+                    <label for="size-m">M</label>
+                    <input type="radio" id="size-l" name="size" value="L">
+                    <label for="size-l">L</label>
+                    <input type="radio" id="size-xl" name="size" value="XL">
+                    <label for="size-xl">XL</label>
                 </div>
             </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-        <script>
-            function generateQRCode(data) {
-                var qrCodeElement = document.getElementById('qr-code');
-                var boxIdElement = document.getElementById('box-id');
-                //qrCodeElement.innerHTML = ""; // Очистить предыдущий QR-код, если он есть
-                var qr = qrcode(4, 'H');
-                qr.addData(data);
-                qr.make();
-                qrCodeElement.innerHTML = qr.createImgTag(6);
-            }
-            function printQRCode(boxId) {
-                var qrCodeElement = document.getElementById('qr-code');
-                var boxIdElement = document.getElementById('box-id');
-                var printWindow = window.open('', 'Print QR Code', 'height=600,width=800');
-                printWindow.document.write('<html><head><title>Print QR Code</title>');
-                printWindow.document.write('</head><body>');
-                printWindow.document.write('<div style="text-align: center;">');
-                printWindow.document.write(qrCodeElement.innerHTML);
-                printWindow.document.write('<div font-family="Onest" font-weight="600">ID: ' + boxId + '</div>');
-                printWindow.document.write('</div>');
-                printWindow.document.write('</body></html>');
-                printWindow.document.close();
-                printWindow.print();
-            }
-    
-            var form = document.getElementById('create-box-form');
-            var qrCodeContainer = document.getElementById('qr-code-container');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                var data = {
-                    size: this.size.value,
-                    client: this.client.value,
-                    phone: this.phone.value,
-                    address: this.address.value
-                };
-                axios.post('/api/boxes', data, {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    },
-                })
-                .then(function(response) {
-                    var boxId = response.data.box_id;
-                    generateQRCode(boxId);
-                    qrCodeContainer.style.display = 'flex';
-                    var boxIdElement = document.getElementById('box-id');
-                    boxIdElement.innerText = 'ID: ' + boxId;
-                    var printBtn = document.getElementById('print-btn');
-                    printBtn.onclick = function() {
-                        printQRCode(boxId);
-                    };
-                    loadTableData();
-                    form.reset();
-                    document.getElementById('size-s').checked = true;
-                    var qrCodeModal = document.getElementById('qr-modal-container');
-                    qrCodeModal.onclick = function() {
-                        qrCodeContainer.style.display = 'none';
-                    };
+            <div class="form-row">
+                <label for="client">Клиент</label>
+                <input type="text" id="client" name="client" placeholder="Андрей" required>
+            </div>
+            <div class="form-row">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="89123456789" required>
+            </div>
+            <div class="form-row">
+                <label for="address">Адрес</label>
+                <input type="text" id="address" name="address" placeholder="ул.Название 123" required>
+            </div>
+            <input type="submit" id="add_btns" value="Добавить посылку">
+        </form>
+    </div>
 
-                })
-                .catch(function(error) {
-                    console.error(error);
-                });
-            });
-        </script>
+    <div id="qr-code-container" style="display: none;">
+        <div id="qr-modal-container"></div>
+        <div id="top-section">
+            <div id="qr-code"></div>
+            <div id="right-section">
+                <span id="qr-help-msg">Наклейте или напишите<br>айди на коробку</span>
+                <div id="box-id"></div>
+                <button id="print-btn">Распечатать</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="{{ url_for('static', path='storage/js/loadTableData.js') }}"></script>
+    <script src="{{ url_for('static', path='storage/js/createBox.js') }}"></script>
 </div>
-{% endblock %} 
+{% endblock %}
