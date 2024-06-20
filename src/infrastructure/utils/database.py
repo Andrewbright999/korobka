@@ -13,23 +13,18 @@ class Base(DeclarativeBase):
         return f"<{self.__class__.__name__} {','.join(cols)}>"
     pass 
 
-
 metadata = MetaData()
-
 
 engine = create_async_engine(
     url = settings.DATABASE_URL_asyncpg,
     # echo=True,  
 )
 
-
 async_session = async_sessionmaker(engine, expire_on_commit=False)
-
 
 async def get_async_session():
     async with async_session() as session:
         yield session
-
 
 async def create_tables(): 
     async with engine.begin() as conn:
