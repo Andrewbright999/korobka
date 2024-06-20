@@ -3,11 +3,10 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from infrastructure.utils.auth import current_user
-from domain.boxes.schemas import UpdateStatus, OnCreateBox, AddBoxRequest, BoxSchema, BoxRead
-
 from application.services.boxes import BoxService
+from infrastructure.utils.auth import current_user
 from infrastructure.utils.dependecies import box_service, courier_role_check,storage_role_check
+from domain.boxes.schemas import UpdateStatus, OnCreateBox, AddBoxRequest, BoxSchema, BoxRead
 
 
 router = APIRouter(prefix="/api",tags=["Boxes"], )
