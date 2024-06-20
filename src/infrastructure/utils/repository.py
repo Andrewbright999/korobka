@@ -45,13 +45,6 @@ class SQLAlchemyRepostitory(AbstractRepository):
             result = await session.execute(querty)
             result = [row[0].to_read_model() for row in result.all()]
             return result
-
-    async def find_all_in_status(self, status: list, **params):
-        async with async_session() as session:
-            querty = select(self.model).filter_by(**params).filter(self.model.status.in_(status))
-            result = await session.execute(querty)
-            result = [row[0].to_read_model() for row in result.all()]
-            return result
         
     async def update_box(self, box_id, **params) -> int:
         async with async_session() as session:
