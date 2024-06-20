@@ -2,8 +2,8 @@ from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.orm import relationship
 from fastapi_users.db import SQLAlchemyBaseUserTable
 
-from database import Base
-from auth.schemas import PassUserRead, Role
+from infrastructure.utils.database import Base
+from domain.users.schemas import PassUserRead, Role
 
 class User(SQLAlchemyBaseUserTable, Base):
     id = Column(Integer, primary_key=True, index=True)

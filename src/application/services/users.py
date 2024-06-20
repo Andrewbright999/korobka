@@ -1,4 +1,4 @@
-from utils.repository import AbstractRepository
+from infrastructure.utils.repository import AbstractRepository
 
 class UserService:
     def __init__(self, user_repo: AbstractRepository):

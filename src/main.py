@@ -8,11 +8,13 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from database import create_tables
-from boxes.router import router as box_router
-from auth.routers import router as auth_router
-from pages.router import router as page_router
-from auth.admin import create_admin
+
+from api.routers.users import router as auth_router
+
+from infrastructure.utils.database import create_tables
+from infrastructure.utils.admin import create_admin
+from api.routers.boxes import router as box_router
+from api.routers.pages import router as page_router
 
 
 
@@ -20,8 +22,9 @@ from auth.admin import create_admin
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await create_tables()
-    await create_admin()    
+    await create_admin()   
     yield
+
 
 app = FastAPI(
     title="Коробка",

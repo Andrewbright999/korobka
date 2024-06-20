@@ -1,5 +1,5 @@
-from utils.repository import AbstractRepository
-from boxes.schemas import AddBoxRequest, AddBox, Status
+from infrastructure.utils.repository import AbstractRepository
+from domain.boxes.schemas import AddBoxRequest, AddBox, Status
 
 class BoxService:
     def __init__(self, box_repo: AbstractRepository):

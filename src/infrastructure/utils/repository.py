@@ -2,11 +2,9 @@ from abc import abstractmethod, ABC
 
 from sqlalchemy import insert, select, update
 from sqlalchemy.orm import joinedload
-from sqlalchemy.exc import NoResultFound
 from sqlalchemy import desc
 
-from auth.models import User
-from database import async_session
+from infrastructure.utils.database import async_session
 
 
 class AbstractRepository(ABC):

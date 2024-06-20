@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database import Base
-from boxes.schemas import BoxSchema, Size, Status
+from infrastructure.utils.database import Base
+from domain.boxes.schemas import BoxSchema, Size, Status
 
 class Box(Base):
     __tablename__ = "box"

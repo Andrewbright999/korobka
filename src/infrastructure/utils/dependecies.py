@@ -1,12 +1,12 @@
 from fastapi import Depends, HTTPException
+from infrastructure.utils.auth import current_user
+from domain.users.schemas import Role
+from domain.users.models import User
+from infrastructure.repositories.boxes import BoxRepository
+from infrastructure.repositories.users import UserRepository
+from application.services.boxes import BoxService
+from application.services.users import UserService
 
-from auth.manager import current_user
-from auth.schemas import Role
-from auth.models import User
-from repositories.boxes import BoxRepository
-from repositories.users import UserRepository
-from services.boxes import BoxService
-from services.users import UserService
 
 
 def box_service():

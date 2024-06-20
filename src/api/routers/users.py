@@ -3,12 +3,12 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from auth.auth_backend import auth_backend
-from auth.schemas import UserRead, UserCreate, PassUserRead
-from auth.models import User
-from auth.manager import fastapi_users, current_user
-from services.users import UserService
-from dependecies import admin_role_check, user_service, admin_role_check
+from infrastructure.utils.auth import auth_backend
+from domain.users.schemas import UserRead, UserCreate, PassUserRead
+from domain.users.models import User
+from infrastructure.utils.auth import fastapi_users, current_user
+from application.services.users import UserService
+from infrastructure.utils.dependecies import admin_role_check, user_service, admin_role_check
 
 
 router = APIRouter(tags=["User"])

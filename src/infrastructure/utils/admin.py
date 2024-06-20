@@ -2,11 +2,11 @@ import contextlib
 
 from fastapi_users.exceptions import UserAlreadyExists
 
-from database import get_async_session
-from auth.auth_backend import get_user_db
-from auth.schemas import UserCreate, Role
-from auth.manager import get_user_manager
-from config import settings
+from infrastructure.utils.database import get_async_session
+from infrastructure.utils.auth import get_user_db
+from domain.users.schemas import UserCreate, Role
+from infrastructure.utils.auth import get_user_manager
+from infrastructure.utils.config import settings
 
 
 get_async_session_context = contextlib.asynccontextmanager(get_async_session)

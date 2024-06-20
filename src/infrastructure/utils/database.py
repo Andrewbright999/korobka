@@ -1,9 +1,8 @@
-from fastapi import Depends
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
 
-from config import settings
+from infrastructure.utils.config import settings
 
 
 class Base(DeclarativeBase):    
@@ -36,3 +35,5 @@ async def create_tables():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
+        
+        

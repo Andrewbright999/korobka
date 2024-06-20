@@ -3,12 +3,11 @@ from typing import Annotated, List
 from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 
-from auth.manager import current_user
-from auth.models import User
-from boxes.schemas import UpdateStatus, OnCreateBox, AddBoxRequest, BoxSchema, BoxRead
+from infrastructure.utils.auth import current_user
+from domain.boxes.schemas import UpdateStatus, OnCreateBox, AddBoxRequest, BoxSchema, BoxRead
 
-from services.boxes import BoxService
-from dependecies import box_service, courier_role_check,storage_role_check
+from application.services.boxes import BoxService
+from infrastructure.utils.dependecies import box_service, courier_role_check,storage_role_check
 
 
 router = APIRouter(prefix="/api",tags=["Boxes"], )
@@ -17,7 +16,7 @@ router = APIRouter(prefix="/api",tags=["Boxes"], )
 async def add_box(
     box: AddBoxRequest, 
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(storage_role_check),
+    user = Depends(storage_role_check),
     ) -> OnCreateBox:
     """Создание новой коробки"""
     box_id = await box_service.add_box(box, user_id=user.id)
@@ -27,7 +26,7 @@ async def add_box(
 @router.get("/boxes/my")
 async def get_my_boxes(
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(courier_role_check),
+    user = Depends(courier_role_check),
 ) -> List[BoxSchema]:
     """Все коробки для курьера"""
     try:
@@ -40,7 +39,7 @@ async def get_my_boxes(
 @router.get("/boxes")
 async def get_all_boxes(
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(storage_role_check),
+    user = Depends(storage_role_check),
 ) -> List[BoxRead]:
     """Все коробки для склада"""
     try:
@@ -57,7 +56,7 @@ async def get_all_boxes(
 async def find_box(
     id:int,
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(current_user),
+    user = Depends(current_user),
 ) -> BoxSchema:
     """Получение данных о конкретной коробке"""
     try:
@@ -72,7 +71,7 @@ async def update_box_status(
     id:int,
     status: UpdateStatus,
     box_service: Annotated[BoxService, Depends(box_service)],
-    user: User = Depends(courier_role_check),
+    user = Depends(courier_role_check),
 ) -> OnCreateBox:
     """Обновление статуса коробки"""
     try:
