@@ -17,10 +17,6 @@ class AbstractRepository(ABC):
         raise NotImplementedError
     
     @abstractmethod
-    async def find_all_in_status():
-        raise NotImplementedError
-    
-    @abstractmethod
     async def update_box():
         raise NotImplementedError
     
