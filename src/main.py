@@ -10,13 +10,10 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routers.users import router as auth_router
-
-from infrastructure.utils.database import create_tables
-from infrastructure.utils.admin import create_admin
 from api.routers.boxes import router as box_router
 from api.routers.pages import router as page_router
-
-
+from infrastructure.utils.database import create_tables
+from infrastructure.utils.admin import create_admin
 
 
 @asynccontextmanager
@@ -35,21 +32,20 @@ app.include_router(auth_router)
 app.include_router(box_router)
 app.include_router(page_router)
 
-
 app.mount("/static", StaticFiles(directory="../static"), name="static")
-
 
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
-    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+    allow_headers=["Content-Type",
+                   "Set-Cookie",
+                   "Access-Control-Allow-Headers",
+                   "Access-Control-Allow-Origin",
                    "Authorization"],
 )
 
-
 templates = Jinja2Templates(directory="../templates")
-
 
 @app.exception_handler(404)
 async def not_found_exception_handler(request: Request, exc: HTTPException):

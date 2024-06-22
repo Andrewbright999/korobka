@@ -2,19 +2,12 @@ function generateQRCode(data) {
     var qrCodeElement = document.getElementById('qr-code');
     var boxIdElement = document.getElementById('box-id');
     qrCodeElement.innerHTML = ""; // Очистить предыдущий QR-код, если он есть
-    var qr = qrcode(4, 'H');
-    qr.addData(data);
-    qr.make();
-    // var qrcode = new QRCode("test", {
-    //     text: "http://jindo.dev.naver.com/collie",
-    //     width: 128,
-    //     height: 128,
-    //     colorDark : "#000000",
-    //     colorLight : "#ffffff",
-    //     correctLevel : QRCode.CorrectLevel.H
-    // });
-    
-    qrCodeElement.innerHTML = qr.generateQRCode(data)
+    // Создаем новый QR-код
+    new QRCode(boxIdElement, {
+        text: data,
+        width: 128, // Ширина QR-кода
+        height: 128 // Высота QR-кода
+    });
 }
 function printQRCode(boxId) {
     var qrCodeElement = document.getElementById('qr-code');
