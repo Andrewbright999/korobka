@@ -72,7 +72,7 @@ form.addEventListener('submit', async function(event) {
         },
     })
     .then(function(response) {
-        var boxId = response.data.box_id;
+        var boxId = response.data.box_id.toString();
         generateQRCode(boxId);
         loadTableData();
         form.reset();
