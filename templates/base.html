@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
-    <title></title>
     {% block header %}{% endblock %}
     <link rel="stylesheet" href="{{ url_for('static', path='base/css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,9 +14,28 @@
     <header>
         <aside class="header-container">
             <h1>Склад</h1>
-            <a href="/profile" id="profile-name">Пользователь</a>
+            <span id="profile-name">Пользователь</span>
         </aside>
     </header>
+    <div id="profile-data" style="display: none;">
+        <div class="data-row">
+            <span class="profile-label">Фамилия</span>
+            <span class="profile-text" id="second-name">Фамилия</span>
+        </div>
+        <div class="data-row">
+            <span class="profile-label">Имя</span>
+            <span class="profile-text" id="first-name">Имя</span>
+            </div>
+        <div class="data-row">
+            <span class="profile-label">Email</span>
+            <span class="profile-text" id="email">Email</span>
+        </div>
+        <div class="data-row">
+            <span class="profile-label">Телефон</span>
+            <span class="profile-text" id="phone">Телефон</span>
+        </div>
+        <a  id="logout">Выйти из профиля</a>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="{{ url_for('static', path='base/js/profile.js') }}"></script>
     {% block body %}{% endblock %}

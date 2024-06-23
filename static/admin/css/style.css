@@ -1,0 +1,307 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: Onest;
+    text-decoration: none;
+    text-wrap: nowrap;
+}
+
+:root{
+    --orange: rgb(255, 106, 0);
+    --background-color: rgb(254, 254, 254);
+    --hover-table: rgb(241, 241, 241);
+    --text-color: rgb(17, 17, 17);
+}
+
+/* Ссылки */
+a{
+    color: var(--text-color);
+}
+
+a:hover{
+    color: var(--orange);
+    cursor: pointer;
+}
+
+#no-admin{
+    width: 100%;
+    height: 500px;
+    align-self: center;
+    background-image: url(../img/svg/nonadmin.svg);
+    background-position:  top center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
+    align-self: center;
+    }
+
+
+/* Таблица */
+table{
+    height: 72px;
+    width: fit-content;
+}
+
+thead > tr{
+    height: fit-content;
+}
+
+table > tbody > tr{
+    height: 4rem;
+}
+
+table > tbody > tr:hover{
+    background-color: var(--hover-table);
+}
+
+
+th{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 1rem;
+    color: var(--text-color);
+    text-align: left;
+    justify-content: left;
+}
+
+td{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 23px;
+    color: #000000;
+    border: none;
+    padding-right: 30px;
+}
+
+
+td.adres, td.client, td.phone-number, td.courier{
+    display:table-cell;
+    max-width: 150px;
+    margin-right: 1rem;
+    overflow: hidden;
+}
+
+th.adres, th.client, th.phone-number, th.courier{
+    /* display: inline-block;
+    width: 120px;
+    margin-right: 1rem; */
+    overflow: hidden;
+}
+
+th.id{
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+td.state{
+    padding-right: 0;
+}
+
+td.size{
+    padding-left: 1rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th.size{
+    padding-right: 1rem;
+}
+
+
+
+.state-delivery, .state-done, .state-new{
+    /* Auto layout */
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 8px;
+    border-radius: 40px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: #FFFFFF;
+    text-wrap:nowrap;
+    }
+
+.state-new{
+    background: #82569D;
+}
+
+.state-delivery{
+    background: #4C80CE;
+}
+
+.state-done{
+    background: #4C9954;
+}
+
+td.time{
+    width: auto;
+    padding-right: 40px;
+}
+
+td.courier{
+    padding-right: 3rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+
+/*------------Форма------------------*/
+
+.body-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 120px;
+}
+
+
+.form-container {
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    margin-top: 0;
+    align-self: start;
+    top:120px;
+    position: -webkit-sticky; /* для поддержки Safari */
+    position: sticky;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 42px;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+label {
+    font-weight: 900;
+    font-size: 24px;
+    width: 120px;
+}
+
+.form-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+}
+
+
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+select option, 
+select{
+    padding: 10px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: 500;
+    width: 212px;
+}
+
+/* Кнопки */
+input[type="submit"],#ok-btn{
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    gap: 4px;
+    border-radius: 12px;
+    font-weight: 500;
+    line-height: 31px;
+    font-size: 24px;
+    color: #FFFFFF;
+    background: #4C9954;
+    width: fit-content;
+    align-self: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover{
+    background: #3D7A43;
+    cursor: pointer;
+}
+
+input[type="submit"] value{
+    background: #3D7A43;
+    cursor: pointer;
+}
+
+/* Печать QR */
+#user-message-modal-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.body-container > #user-message-container > #top-section{
+    position: fixed;    
+    z-index: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    height: fit-content;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+
+#right-section{
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    padding: 30px;
+}
+
+#user-help-msg{
+    font-size: 28px;
+    line-height: 100%;
+    font-weight: 600;
+    height: fit-content;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+#user-id{
+    font-weight: 900;
+    font-size: 32px;
+}

@@ -9,6 +9,15 @@ router = APIRouter(
 
 templates = Jinja2Templates(directory="../templates")
 
+@router.get("/admin")
+def get_admin_page(request: Request) -> HTMLResponse:
+    """Админ панель"""
+    return templates.TemplateResponse("admin.html", {"request": request})
+
+@router.get("/courier")
+def get_admin_page(request: Request) -> HTMLResponse:
+    """Страница для курьеров"""
+    return templates.TemplateResponse("courier.html", {"request": request})
 
 @router.get("/storage")
 def get_storage_page(request: Request) -> HTMLResponse:

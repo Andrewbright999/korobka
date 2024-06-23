@@ -1,14 +1,25 @@
-function generateQRCode(data) {
+async function generateQRCode(box_id) {
     var qrCodeElement = document.getElementById('qr-code');
     var boxIdElement = document.getElementById('box-id');
     qrCodeElement.innerHTML = ""; // Очистить предыдущий QR-код, если он есть
-    // Создаем новый QR-код
-    new QRCode(boxIdElement, {
-        text: data,
-        width: 128, // Ширина QR-кода
-        height: 128 // Высота QR-кода
-    });
-}
+    const url = await QRCode.toDataURL(JSON.stringify(box_id), { errorCorrectionLevel: 'H' });
+    const img = document.createElement('img');
+    img.src = url;
+    img.width = 245;
+    img.height = 245;
+    qrCodeElement.appendChild(img);
+    qrCodeContainer.style.display = 'flex';
+        var boxIdElement = document.getElementById('box-id');
+        boxIdElement.innerText = 'ID: ' + box_id;
+        var printBtn = document.getElementById('print-btn');
+        var qrCodeModal = document.getElementById('qr-modal-container');
+        qrCodeModal.onclick = function() {
+            qrCodeContainer.style.display = 'none';
+        };
+        printBtn.onclick = function() {
+            printQRCode(box_id);
+        };
+};
 function printQRCode(boxId) {
     var qrCodeElement = document.getElementById('qr-code');
     var boxIdElement = document.getElementById('box-id');
@@ -26,7 +37,7 @@ function printQRCode(boxId) {
 
 var form = document.getElementById('create-box-form');
 var qrCodeContainer = document.getElementById('qr-code-container');
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', async function(event) {
     event.preventDefault();
     var data = {
         size: this.size.value,
@@ -42,21 +53,9 @@ form.addEventListener('submit', function(event) {
     .then(function(response) {
         var boxId = response.data.box_id;
         generateQRCode(boxId);
-        qrCodeContainer.style.display = 'flex';
-        var boxIdElement = document.getElementById('box-id');
-        boxIdElement.innerText = 'ID: ' + boxId;
-        var printBtn = document.getElementById('print-btn');
-        printBtn.onclick = function() {
-            printQRCode(boxId);
-        };
         loadTableData();
         form.reset();
         document.getElementById('size-s').checked = true;
-        var qrCodeModal = document.getElementById('qr-modal-container');
-        qrCodeModal.onclick = function() {
-            qrCodeContainer.style.display = 'none';
-        };
-
     })
     .catch(function(error) {
         console.error(error);

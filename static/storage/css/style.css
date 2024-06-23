@@ -90,10 +90,17 @@ th.adres, th.client, th.phone-number, th.courier{
 }
 
 th.id{
+    font-size: 20px;
+    font-weight: 900;
     padding-left: 2rem;
-    padding-right: 2rem;
+    padding-right: 1rem;
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
+}
+
+tbody > tr > th.id:hover{
+    color: var(--orange);
+    cursor: pointer;
 }
 
 td.state{
@@ -109,8 +116,6 @@ td.size{
 th.size{
     padding-right: 1rem;
 }
-
-
 
 .state-delivery, .state-done, .state-new{
     /* Auto layout */

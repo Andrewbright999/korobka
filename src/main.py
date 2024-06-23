@@ -1,12 +1,12 @@
 import uvicorn
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request, HTTPException, status
+from fastapi import FastAPI, Request, HTTPException, status, UploadFile, File
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse, JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.routers.users import router as auth_router
@@ -46,6 +46,18 @@ app.add_middleware(
 )
 
 templates = Jinja2Templates(directory="../templates")
+# -> FileResponse
+
+@app.get("/apps/box", tags=["Для защиты"])
+async def send_apk_file() :
+    apk_file_path = "../static/apps/box.apk"
+    return FileResponse(apk_file_path, media_type="application/vnd.android.package-archive")
+
+
+@app.get("/github", tags=["Для защиты"])
+async def redirect_to_github() :
+    return RedirectResponse(url="https://github.com/andrewbright999/korobka")
+
 
 @app.exception_handler(404)
 async def not_found_exception_handler(request: Request, exc: HTTPException):
@@ -74,6 +86,7 @@ async def not_found_exception_handler(request: Request, exc: HTTPException):
 async def default_page():
     """Переадресация на страницу склада"""
     return RedirectResponse(url="/storage")
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)

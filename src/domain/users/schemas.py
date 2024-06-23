@@ -24,9 +24,6 @@ class UserCreate(schemas.BaseUserCreate):
     first_name: str
     second_name: str
     role: Role
-    is_active: bool = True
-    is_superuser: bool = False
-    is_verified: bool = True
 
 
 class ClearUserRead(BaseModel):

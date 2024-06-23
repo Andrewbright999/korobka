@@ -1,3 +1,4 @@
+localStorage.removeItem('token');
 document.getElementById('email-form').addEventListener('submit', async function(event) {
     event.preventDefault();
     const email = document.getElementById('email').value;

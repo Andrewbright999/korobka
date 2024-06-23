@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block header %}
+<title>Курьерам | Коробка</title>
+<link rel="stylesheet" href="{{ url_for('static', path='courier/css/style.css') }}">
+{% endblock %}
+{% block body %}
+<div class="body-container">
+    <h1>Приложение<br>для курьеров</h1>
+    <div id="app-image"></div>
+    <a href='apps/box' id="download-button" download>Скачать</a>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</div>
+{% endblock %}

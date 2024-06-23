@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block header %}
+<title>Админ панелька  | Коробка</title>
+<link rel="stylesheet" href="{{ url_for('static', path='admin/css/style.css') }}">
+{% endblock %}
+{% block body %}
+<div class="body-container">
+    <div id="no-admin"></div>
+    <table></table>
+    <div class="form-container" id="form-container">
+        <h2>Регистрация</h2>
+        <form id="register-form">
+            <div class="form-row">
+                <label for="role">Роль</label>
+                <select default:"Курьер"  name="role">
+                    <option value="Курьер">Курьер</option > 
+                    <option value="Склад">Склад</option>
+                    <option value="Администратор">Администратор</option>
+                  </select>
+            </div>
+            <div class="form-row">
+                <label for="address">Фамилия</label>
+                <input type="text" id="second_name" name="second_name" placeholder="Бочаров" required>
+            </div>
+            <div class="form-row">
+                <label for="address">Имя</label>
+                <input type="text" id="first_name" name="first_name" placeholder="Андрей" required>
+            </div>
+            <div class="form-row">
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="89123456789" required>
+            </div>
+            <div class="form-row">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="mail@korobka.ru" required>
+            </div>
+            <div class="form-row">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" name="password" placeholder="Пароль" required>
+            </div>
+            <input type="submit" id="add_btns" value="Зарегистрировать">
+        </form>
+    </div>
+
+    <div id="user-message-container" style="display: none;">
+        <div id="user-message-modal-container"></div>
+        <div id="top-section">
+        <div id="right-section">
+            <span id="user-help-msg">Пользователь<br>зарегистрирован</span>
+            <button id="ok-btn">Хорошо</button>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ url_for('static', path='admin/js/loadTableData.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="{{ url_for('static', path='admin/js/register.js') }}"></script>
+</div>
+{% endblock %}

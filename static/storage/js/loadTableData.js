@@ -2,8 +2,24 @@ var qrCodeContainer = document.getElementById('qr-modal-container');
 let token = localStorage.getItem('token');
 const table = document.querySelector("table")
 const notFoundImg = document.getElementById("not-found")
+let profiledata = localStorage.getItem('role')
+
+if (!token) {
+    window.location.href = '/login';
+};
+
+console.log(profiledata);
+
+// if (profiledata.role === "Курьер"){
+//     console.log("sdsd")
+//     window.location.href = '/courier';
+// };
+
 console.log(token)
 function loadTableData() {
+    if (!token) {
+        window.location.href = '/login';
+      }
     axios.get(
         '/api/boxes',
         {
@@ -48,22 +64,32 @@ function loadTableData() {
                     <td class="client">${item.client}</td>
                     <td class="phone-number">${item.phone}</td>
                     <td class="courier">${item.courier}</td>`;
-                tableTbody.appendChild(row);
-            }
-        } 
+            tableTbody.appendChild(row);
+            const idlist = document.querySelectorAll("tbody > tr > th.id")
+            idlist.forEach(item => {
+                item.addEventListener('click', async function(){
+                    await generateQRCode(item.textContent);
+                    })
+            });
+        }}
     })
     .catch(error => {
+        console.log(error.status);
     if (error.status === 404) {
-        console.log(404)
         notFoundImg.style.display = 'flex'
         table.set.innerHTML = ``;
         table.style.display = 'none';
     };
-    console.log(error.response);
-    console.log();
-
     if (error.response.data.detail == 'Unauthorized'){
         window.location.href = '/login';
+    };
+    if (error.response.status == 403){
+        var form = document.querySelector('.form-container');
+        form.style.display = 'none';
+        window.location.href = '/courier';
+        notFoundImg.style.display = 'none'
+        table.set.innerHTML = ` `;
+        table.style.display = 'none';
     }
     });
 }
