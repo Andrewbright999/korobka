@@ -1,13 +1,29 @@
 async function generateQRCode(box_id) {
+    let int_id = parseInt(box_id)
+    console.log(typeof int_id)
     var qrCodeElement = document.getElementById('qr-code');
     var boxIdElement = document.getElementById('box-id');
     qrCodeElement.innerHTML = ""; // Очистить предыдущий QR-код, если он есть
-    const url = await QRCode.toDataURL(JSON.stringify(box_id), { errorCorrectionLevel: 'H' });
-    const img = document.createElement('img');
-    img.src = url;
-    img.width = 245;
-    img.height = 245;
+    // const url = await QRCode.toDataURL(int_id, { errorCorrectionLevel: 'H' });
+    // const img = document.createElement('img');
+    // img.src = url;
+    // img.width = 245;
+    // img.height = 245;
+    // qrCodeElement.appendChild(img);
+
+    var qr = qrcode(3, 'H');
+    qr.addData(box_id);
+    qr.make();
+    var img = document.createElement('img');
+    img.src = qr.createDataURL();
+    img.width = 600;
+    img.height = 600;
+    img.style.width = '230px';
+    img.style.height = '230px';
     qrCodeElement.appendChild(img);
+
+
+
     qrCodeContainer.style.display = 'flex';
         var boxIdElement = document.getElementById('box-id');
         boxIdElement.innerText = 'ID: ' + box_id;

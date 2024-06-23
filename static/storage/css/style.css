@@ -332,6 +332,9 @@ input[type="submit"] value{
 
 }
 
+#qr-code{
+    padding: 5px;
+}
 
 #right-section{
     display: flex;
