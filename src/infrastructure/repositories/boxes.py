@@ -3,6 +3,3 @@ from domain.boxes.models import Box
 
 class BoxRepository(SQLAlchemyRepostitory):
     model = Box
-    
-    
-    
