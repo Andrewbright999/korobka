@@ -14,15 +14,18 @@ def get_admin_page(request: Request) -> HTMLResponse:
     """Админ панель"""
     return templates.TemplateResponse("admin.html", {"request": request})
 
+
 @router.get("/courier")
 def get_admin_page(request: Request) -> HTMLResponse:
     """Страница для курьеров"""
     return templates.TemplateResponse("courier.html", {"request": request})
 
+
 @router.get("/storage")
 def get_storage_page(request: Request) -> HTMLResponse:
     """Главная страница, если пользователь не авторизован, то редирект на страницу входа"""
     return templates.TemplateResponse("storage.html", {"request": request})
+
 
 @router.get("/login")
 def get_login_page(request: Request) -> HTMLResponse:

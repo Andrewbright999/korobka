@@ -11,6 +11,7 @@ from domain.boxes.schemas import UpdateStatus, OnCreateBox, AddBoxRequest, BoxSc
 
 router = APIRouter(prefix="/api",tags=["Boxes"], )
     
+    
 @router.post('/boxes')
 async def add_box(
     box: AddBoxRequest, 
