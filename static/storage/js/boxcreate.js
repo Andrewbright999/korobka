@@ -20,6 +20,7 @@ async function generateQRCode(box_id) {
             printQRCode(box_id);
         };
 };
+
 function printQRCode(boxId) {
     var qrCodeElement = document.getElementById('qr-code');
     var boxIdElement = document.getElementById('box-id');
@@ -33,7 +34,10 @@ function printQRCode(boxId) {
     printWindow.document.write('</body></html>');
     printWindow.document.close();
     printWindow.print();
+    console.log();
 }
+
+
 
 var form = document.getElementById('create-box-form');
 var qrCodeContainer = document.getElementById('qr-code-container');
@@ -45,6 +49,7 @@ form.addEventListener('submit', async function(event) {
         phone: this.phone.value,
         address: this.address.value
     };
+    
     axios.post('/api/boxes', data, {
         headers: {
             'Authorization': 'Bearer ' + token
