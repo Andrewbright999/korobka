@@ -169,3 +169,24 @@ button{
 button:hover{
     cursor: url(../img/cursor/pointer.svg) 2 2, auto;
 }
+
+
+
+
+footer{
+    display: flex;
+    position: absolute;
+    bottom: 0px;
+    align-self: stretch;
+    height: fit-content;
+    padding: 16px 32px;
+    align-items: start;
+    gap: 32px;
+    margin-top: 100px;
+}
+
+.footer-link{
+    text-decoration: underline;
+    color: #000000;
+    font-size: 18px;
+}

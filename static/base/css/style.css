@@ -113,3 +113,23 @@ h1{
     color: #E65752;
     font-weight: 500;
 }
+
+
+footer{
+    display: flex;
+    /* position: absolute; */
+    bottom: 0px;
+    align-self: stretch;
+    height: fit-content;
+    padding: 32px 16px;
+    align-items: start;
+    gap: 32px;
+    background-color: black;
+    margin-top: 100px;
+}
+
+.footer-link{
+    text-decoration: underline;
+    color: #fff;
+    font-size: 18px;
+}
